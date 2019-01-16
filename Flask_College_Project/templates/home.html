@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Context Based Spelling Correction</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+      <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+<style>
+    #abc {
+        width: 300px;
+        height: 250px;
+    }
+    /* Remove the navbar's default margin-bottom and rounded borders */
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+</head>
+<body>
+<script type="text/javascript" src="../static/js/jquery.js"></script>
+<script type="text/javascript">
+    $(document).ready(function(){
+
+    }};
+
+
+</script>
+{% set x = -1 %}
+<div class="jumbotron">
+  <div class="container text-center">
+    <h2>Context Based Spelling Correction</h2>
+  </div>
+</div>
+<div class="container-fluid bg-3 text-center">
+
+  <div class="row">
+
+    <div class="col-sm-3">
+
+
+        <p>Please Enter Your input Text:</p>
+        <form action="{{ url_for('result') }}" method="post">
+            <textarea type="text" name="inputText" value="{{ input }}" cols="40" rows="8" style="color:black; margin: 0px; height: 252px; width: 345px;"></textarea><br>
+
+            <input type="submit">
+        </form>
+    </div>
+
+    <div class="col-sm-3">
+        <p>Without Context</p>
+        <textarea style="color:black; margin: 0px; height: 252px; width: 345px;"  cols="40" rows="8" >
+            {% if output %}
+             {{ output }}
+            {% endif %}
+        </textarea>
+    </div>
+
+    <div class="col-sm-3">
+        <p>With context</p>
+        <textarea style="color:black; margin: 0px; height: 252px; width: 345px;"  cols="40" rows="8">
+            {% if real %}
+                {{ real }}
+            {% endif %}
+        </textarea>
+    </div>
+
+
+            <div class="col-sm-3" style="height: 252px; overflow:auto;">
+            <p>Possible Candidates</p>
+
+                <table id="abc" class="table table-bordered" style="border-collapse: collapse;">
+                 <thead>
+                  <tr>
+                    <th>Input:</th>
+                    <th>Candidates:</th>
+                  </tr>
+                 </thead>
+                {% if output %}
+                    <tbody>
+
+                     {% for key, value in candidate.items() %}
+                        <tr>
+                            <td>
+
+                                    {{ key }}
+                                {% set x = x + 1 %}
+                             </td>
+                            <td>
+                                {%  for item in value %}
+
+                                    {{ item }},
+
+                                {% endfor %}
+                             </td>
+                        </tr>
+                     {% endfor %}
+                    </tbody>
+                    {% else %}
+                    <tbody>
+                         <tr>
+                            <td>
+
+                             </td>
+                            <td>
+                             </td>
+                        </tr>
+                    </tbody>
+                    {% endif %}
+
+              </table>
+            </div>
+
+</div><br>
+
+<footer class="container-fluid text-center">
+{#    {% if correct['result'] %}#}
+{#        <b>Input:  {{ input }}<br>#}
+{#            Obtained: {{ real }}<br>#}
+{#            GingerIT: {{ correct['result'] }}#}
+{#            In 66 words, corrected:{{ accuracy}}</b>#}
+{#        <br>#}
+{#        <br>#}
+{#        <br>#}
+{#    {% else %}#}
+    {%  if real %}
+        <b>Input:  {{ input }}<br>
+            Obtained: {{ real }}<br>
+            {% endif %}
+        <br>
+        <br>
+        <br>
+{#    {% endif %}#}
+
+  <p>Check for spelling and typos. More features coming soon.</p>
+</footer>
+
+</body>
+</html>
